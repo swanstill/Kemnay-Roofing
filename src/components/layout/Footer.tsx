@@ -393,29 +393,8 @@ function BottomFooter() {
           </span>
         </div>
 
-        {/* Center — Legal links */}
-        <div
-          className="flex items-center flex-wrap justify-center gap-x-4 gap-y-1 text-sm"
-          style={{ fontFamily: "var(--font-body)", fontSize: "15px" }}
-        >
-          {["Terms of Use", "Privacy Policy", "Cookie Policy", "Trading Terms"].map(
-            (label, i, arr) => (
-              <span key={label} className="flex items-center gap-4">
-                <Link
-                  href="/privacy-policy"
-                  className="transition-colors duration-200 hover:text-[#F2B100]"
-                  style={{ color: "#999" }}
-                >
-                  {label}
-                </Link>
-                {i < arr.length - 1 && (
-                  <span style={{ color: "rgba(255,255,255,0.15)" }}>|</span>
-                )}
-              </span>
-            )
-          )}
-        </div>
-
+        {/* Legal links removed */}
+        
         {/* Right — Copyright */}
         <p
           className="text-sm text-center lg:text-right"
