@@ -18,6 +18,7 @@ import {
   Calendar,
   Sun,
   ChevronRight,
+  ArrowLeft,
 } from "lucide-react";
 
 const TOTAL_STEPS = 6;
@@ -190,6 +191,15 @@ export default function MultiStepQuoteForm() {
             {renderCards(serviceTypes, selectedService, (id) =>
               handleCardSelect(setSelectedService, id, 3)
             )}
+            <div className="flex justify-center mt-5">
+              <button
+                onClick={() => setCurrentStep(1)}
+                className="flex items-center gap-2 text-white/40 hover:text-[#F2B100] text-sm transition-colors"
+              >
+                <ArrowLeft className="w-4 h-4" />
+                Back
+              </button>
+            </div>
           </>
         );
 
