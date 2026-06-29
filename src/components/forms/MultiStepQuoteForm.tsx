@@ -27,7 +27,7 @@ const propertyTypes = [
   { id: "semi-detached", label: "Semi Detached", image: "/images/property-types/semi-detached.png" },
   { id: "terraced", label: "Terraced", image: "/images/property-types/Terraced.png" },
   { id: "bungalow", label: "Bungalow", image: "/images/property-types/Bungalow.png" },
-  { id: "commercial", label: "Commercial Building", image: "/images/property-types/Commercial Building.png" },
+  { id: "commercial", label: "Commercial Building", image: "/images/property-types/Commercial-Building.png" },
   { id: "other", label: "Other", icon: MoreHorizontal },
 ];
 
