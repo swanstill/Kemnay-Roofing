@@ -25,12 +25,12 @@ const SERVICE_LINKS = [
 ];
 
 const COMPANY_LINKS = [
-  { label: "About Us", href: "/about" },
   { label: "Gallery", href: "/gallery" },
   { label: "Reviews", href: "/reviews" },
   { label: "Contact", href: "/contact" },
-  { label: "Privacy Policy", href: "/privacy-policy" },
-  { label: "Terms & Conditions", href: "/privacy-policy" },
+  { label: "Privacy Policy", href: "https://business.yell.com/websites-privacy-cookie-policy/" },
+  { label: "Terms of Use", href: "https://business.yell.com/legal/terms-of-use/" },
+  { label: "Trading Terms", href: "https://business.yell.com/legal/trading-terms/" },
 ];
 
 /* ───────────────────────────────────────────────
@@ -285,14 +285,14 @@ function MainFooter() {
             </ul>
           </div>
 
-          {/* ═══ Column 4 — Company Links ═══ */}
+          {/* ═══ Column 4 — Quick Links ═══ */}
           <div className="space-y-6">
             <div>
               <h3
                 className="text-white font-heading font-bold"
                 style={{ fontSize: "30px" }}
               >
-                COMPANY
+                QUICK LINKS
               </h3>
               <GoldUnderline />
             </div>
