@@ -395,6 +395,20 @@ function BottomFooter() {
 
         {/* Legal links removed */}
 
+        {/* Center — Design credit */}
+        <p
+          className="text-sm text-center"
+          style={{ color: "#999", fontFamily: "var(--font-body)", fontSize: "15px" }}
+        >
+          Website design with <span style={{ color: "#E63946" }}>&hearts;</span> by{" "}
+          <Link
+            href="https://www.tradesgrow.co.uk/"
+            className="hover:text-[#F2B100] transition-colors"
+          >
+            Trades Grow
+          </Link>
+        </p>
+
         {/* Right — Copyright */}
         <p
           className="text-sm text-center lg:text-right"
