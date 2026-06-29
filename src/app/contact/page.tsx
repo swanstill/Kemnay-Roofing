@@ -3,7 +3,7 @@ import PageHero from "@/components/layout/PageHero";
 import ContactForm from "@/components/forms/ContactForm";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 import { COMPANY } from "@/lib/constants";
-import { Phone, Mail, MapPin, Clock } from "lucide-react";
+import { Phone, Mail, MapPin } from "lucide-react";
 
 export const metadata: Metadata = {
   title: "Contact Us",
@@ -78,25 +78,6 @@ export default function ContactPage() {
                   </ScrollReveal>
                 ))}
 
-                <ScrollReveal delay={300}>
-                  <div className="p-4 rounded-lg bg-kemnay-light">
-                    <div className="flex items-start gap-4">
-                      <div className="w-12 h-12 rounded-lg bg-kemnay-gold/10 flex items-center justify-center shrink-0">
-                        <Clock className="w-5 h-5 text-kemnay-gold" />
-                      </div>
-                      <div>
-                        <p className="text-kemnay-gray text-xs uppercase tracking-wider">
-                          Hours
-                        </p>
-                        <div className="text-kemnay-black text-sm mt-1 space-y-0.5">
-                          <p>Mon - Fri: 8:00am - 6:00pm</p>
-                          <p>Sat: 9:00am - 4:00pm</p>
-                          <p>Sun: Closed</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </ScrollReveal>
               </div>
             </div>
 
