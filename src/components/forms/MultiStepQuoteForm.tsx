@@ -95,7 +95,7 @@ export default function MultiStepQuoteForm() {
     selected: string | null,
     onSelect: (id: string) => void
   ) => (
-    <div className="grid grid-cols-6 gap-3">
+    <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-3">
       {options.map((opt) => {
         const isSelected = selected === opt.id;
         const Icon = opt.icon;
