@@ -33,7 +33,7 @@ export default function ServiceCard({ service, index = 0 }: ServiceCardProps) {
       className={cn("scroll-reveal", isRevealed && "revealed")}
       style={{ transitionDelay: `${index * 80}ms` }}
     >
-      <Link href="/services" className="group block h-full">
+      <Link href={`/services/${service.id}`} className="group block h-full">
         <div
           className="bg-white rounded-[16px] overflow-hidden h-full transition-all duration-300 ease-out cursor-pointer hover:-translate-y-2"
           style={{

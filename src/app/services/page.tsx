@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Image from "next/image";
+import Link from "next/link";
 import PageHero from "@/components/layout/PageHero";
 import ServicesSection from "@/components/home/ServicesSection";
 import QuoteWizardSection from "@/components/home/QuoteWizardSection";
@@ -50,9 +51,15 @@ export default function ServicesPage() {
                   <p className="text-kemnay-gray leading-relaxed mb-6">
                     {service.description}
                   </p>
+                  <Link
+                    href={`/services/${service.id}`}
+                    className="inline-flex items-center gap-2 bg-kemnay-gold text-kemnay-black px-6 py-3 font-semibold text-sm rounded hover:bg-kemnay-gold-hover transition-all"
+                  >
+                    Learn More
+                  </Link>
                   <a
                     href="#quote"
-                    className="inline-flex items-center gap-2 bg-kemnay-gold text-kemnay-black px-6 py-3 font-semibold text-sm rounded hover:bg-kemnay-gold-hover transition-all"
+                    className="inline-flex items-center gap-2 border-2 border-kemnay-gold text-kemnay-gold px-6 py-3 font-semibold text-sm rounded hover:bg-kemnay-gold hover:text-kemnay-black transition-all"
                   >
                     Get A Free Quote
                   </a>
