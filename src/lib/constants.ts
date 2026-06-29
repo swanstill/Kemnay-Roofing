@@ -43,11 +43,11 @@ export const SERVICES: Service[] = [
   },
   {
     id: "reroofing",
-    title: "Reroofing",
+    title: "Roofing",
     description:
-      "Full reroofing services to breathe new life into your property. We strip, prepare, and re-roof with high-quality materials that enhance both appearance and protection.",
+      "Full roofing services to breathe new life into your property. We strip, prepare, and re-roof with high-quality materials that enhance both appearance and protection.",
     shortDescription:
-      "Complete reroofing to renew your home with high-quality materials and expert craftsmanship.",
+      "Complete roofing to renew your home with high-quality materials and expert craftsmanship.",
     icon: "RefreshCw",
     image: "/images/services/re-roofing.webp",
   },

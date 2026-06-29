@@ -128,15 +128,15 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
 
   reroofing: {
     id: "reroofing",
-    title: "Reroofing",
-    shortDescription: "Complete reroofing to renew your home with quality materials and expert craftsmanship.",
-    description: "Full reroofing services to breathe new life into your property. We strip, prepare, and re-roof with high-quality materials.",
+    title: "Roofing",
+    shortDescription: "Complete roofing to renew your home with quality materials and expert craftsmanship.",
+    description: "Full roofing services to breathe new life into your property. We strip, prepare, and re-roof with high-quality materials.",
     icon: "RefreshCw",
     image: "/images/services/re-roofing.webp",
     heroSubtitle: "Full roof replacement solutions that breathe new life into your property with modern, dependable systems and long-term protection.",
     features: [
       {
-        title: "Reroofing Services",
+        title: "Roofing Services",
         description: "Full replacement of aged or failing roofs with modern, dependable systems. We carefully remove damaged coverings and install new systems that match your property's original look or upgrade it entirely.",
         benefits: [
           "Complete strip and replacement",
@@ -167,22 +167,22 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
         description: "Every property is unique. We provide custom solutions from small homes to large commercial sites — repairing underlying issues, strengthening weather protection, and delivering a clean, durable finish.",
         benefits: [
           "Tailored to your specific property",
-          "Underlying issues repaired before reroofing",
+          "Underlying issues repaired before roofing",
           "Clean, durable finish built to last",
         ],
       },
     ],
     servicesOffered: [
       "Full roof strip and replacement",
-      "Slate, tile, and flat roof reroofing",
+      "Slate, tile, and flat roof roofing",
       "Metal roof upgrades",
       "Insulation improvements",
-      "Structural repairs before reroofing",
-      "Commercial reroofing",
+      "Structural repairs before roofing",
+      "Commercial roofing",
       "Listed building and traditional property work",
       "Free no-obligation surveys",
     ],
-    ctaText: "Book Your Reroofing Consultation",
+    ctaText: "Book Your Roofing Consultation",
   },
 
   "flat-roofing": {
