@@ -394,7 +394,7 @@ function BottomFooter() {
         </div>
 
         {/* Legal links removed */}
-        
+
         {/* Right — Copyright */}
         <p
           className="text-sm text-center lg:text-right"
@@ -402,6 +402,30 @@ function BottomFooter() {
         >
           &copy; {currentYear} {COMPANY.shortName}. All Rights Reserved.
         </p>
+      </div>
+
+      {/* ─── Third Row — Legal & Copyright notice ─── */}
+      <div style={{ height: "1px", backgroundColor: "rgba(255,255,255,0.08)" }} />
+      <div
+        className="px-6"
+        style={{ paddingTop: "24px", paddingBottom: "28px" }}
+      >
+        <div
+          className="max-w-7xl mx-auto text-center space-y-2"
+          style={{ color: "#888", fontFamily: "var(--font-body)", fontSize: "13px", lineHeight: "1.6" }}
+        >
+          <p>
+            <Link
+              href="https://business.yell.com/legal/trading-terms/"
+              className="hover:text-[#F2B100] transition-colors"
+            >
+              KEMNAY ROOFING & EXTERIOR PAINTING LTD
+            </Link>{" "}
+            registered as a limited company in Scotland under company number: SC886865
+          </p>
+          <p>Registered Company Address: 165 Brook Street, Broughty Ferry, Dundee, Scotland, DD5 1DJ</p>
+          <p>&copy; {currentYear}. The content on this website is owned by us and our licensors. Do not copy any content (including images) without our consent.</p>
+        </div>
       </div>
     </div>
   );
