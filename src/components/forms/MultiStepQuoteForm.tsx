@@ -116,13 +116,28 @@ export default function MultiStepQuoteForm() {
             }}
           >
             {opt.image ? (
-              <div className={`w-[70px] h-[70px] flex items-center justify-center transition-opacity duration-200 ${isSelected ? "" : "opacity-40"}`}>
+              <div className={`w-[70px] h-[70px] relative flex items-center justify-center transition-opacity duration-200 ${isSelected ? "" : "opacity-40"}`}>
+                {/* Colored layer using the icon as a mask */}
+                <div
+                  className="absolute inset-0"
+                  style={{
+                    backgroundColor: "#e6a100",
+                    maskImage: `url(${opt.image})`,
+                    maskSize: "contain",
+                    maskRepeat: "no-repeat",
+                    maskPosition: "center",
+                    WebkitMaskImage: `url(${opt.image})`,
+                    WebkitMaskSize: "contain",
+                    WebkitMaskRepeat: "no-repeat",
+                    WebkitMaskPosition: "center",
+                  }}
+                />
                 <Image
                   src={opt.image}
                   alt={opt.label}
                   width={70}
                   height={70}
-                  className="object-contain"
+                  className="invisible"
                 />
               </div>
             ) : Icon ? (
