@@ -5,7 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { Phone, ChevronDown, Menu, X } from "lucide-react";
-import { COMPANY } from "@/lib/constants";
+import { COMPANY, SERVICES } from "@/lib/constants";
 import MobileNav from "./MobileNav";
 
 const NAV_ITEMS = [
@@ -20,6 +20,7 @@ export default function Header() {
   const pathname = usePathname();
   const [isMobileOpen, setIsMobileOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -78,6 +79,64 @@ export default function Header() {
               <nav className="hidden xl:flex items-center justify-center flex-1 gap-6">
                 {NAV_ITEMS.map((item) => {
                   const active = isActive(item.href);
+                  const isDropdown = item.hasDropdown;
+
+                  if (isDropdown) {
+                    return (
+                      <div
+                        key={item.label}
+                        className="relative"
+                        onMouseEnter={() => setDropdownOpen(true)}
+                        onMouseLeave={() => setDropdownOpen(false)}
+                      >
+                        <Link
+                          href={item.href}
+                          className={`relative text-[15px] font-medium leading-none transition-colors duration-300 py-1 whitespace-nowrap inline-flex items-center gap-1.5 ${
+                            active || dropdownOpen
+                              ? "text-[#E4A000]"
+                              : "text-[#A7A7A7] hover:text-white"
+                          }`}
+                        >
+                          {item.label}
+                          <ChevronDown
+                            className={`w-3 h-3 transition-transform duration-200 ${
+                              dropdownOpen ? "rotate-180" : ""
+                            }`}
+                            strokeWidth={2.5}
+                          />
+                        </Link>
+
+                        {/* Dropdown panel */}
+                        {dropdownOpen && (
+                          <div
+                            className="absolute top-full left-1/2 -translate-x-1/2 pt-3"
+                            onMouseEnter={() => setDropdownOpen(true)}
+                            onMouseLeave={() => setDropdownOpen(false)}
+                          >
+                            <div
+                              className="bg-[#1A1A1A] rounded-xl overflow-hidden shadow-2xl shadow-black/50 border border-white/10"
+                              style={{ minWidth: "220px" }}
+                            >
+                              {SERVICES.map((service) => (
+                                <Link
+                                  key={service.id}
+                                  href={`/services/${service.id}`}
+                                  className={`block px-5 py-3 text-sm transition-colors duration-150 ${
+                                    pathname === `/services/${service.id}`
+                                      ? "text-[#E4A000] bg-white/[0.06]"
+                                      : "text-[#A7A7A7] hover:text-white hover:bg-white/[0.04]"
+                                  }`}
+                                >
+                                  {service.title}
+                                </Link>
+                              ))}
+                            </div>
+                          </div>
+                        )}
+                      </div>
+                    );
+                  }
+
                   return (
                     <Link
                       key={item.label}
@@ -90,9 +149,6 @@ export default function Header() {
                     >
                       <span className="flex items-center gap-1.5">
                         {item.label}
-                        {item.hasDropdown && (
-                          <ChevronDown className="w-3 h-3" strokeWidth={2.5} />
-                        )}
                       </span>
                       {active && (
                         <span

@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { Phone, X, ChevronRight } from "lucide-react";
-import { COMPANY } from "@/lib/constants";
+import { useState } from "react";
+import { Phone, X, ChevronRight, ChevronDown } from "lucide-react";
+import { COMPANY, SERVICES } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 
 interface NavItem {
@@ -19,6 +20,7 @@ interface MobileNavProps {
 
 export default function MobileNav({ isOpen, onClose, navItems }: MobileNavProps) {
   const items = navItems || [];
+  const [expanded, setExpanded] = useState<string | null>(null);
 
   return (
     <div
@@ -57,17 +59,56 @@ export default function MobileNav({ isOpen, onClose, navItems }: MobileNavProps)
 
           {/* Navigation Links */}
           <nav className="flex-1 overflow-y-auto py-4">
-            {items.map((item) => (
-              <Link
-                key={item.label}
-                href={item.href}
-                onClick={onClose}
-                className="flex items-center justify-between px-6 py-3.5 text-white/80 hover:text-[#E8AA16] hover:bg-white/5 transition-colors group"
-              >
-                <span className="text-sm font-medium">{item.label}</span>
-                <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
-              </Link>
-            ))}
+            {items.map((item) => {
+              const isExpanded = expanded === item.label;
+              if (item.hasDropdown) {
+                return (
+                  <div key={item.label}>
+                    <button
+                      onClick={() => setExpanded(isExpanded ? null : item.label)}
+                      className="flex items-center justify-between w-full px-6 py-3.5 text-white/80 hover:text-[#E8AA16] hover:bg-white/5 transition-colors group"
+                    >
+                      <span className="text-sm font-medium">{item.label}</span>
+                      <ChevronDown
+                        className={`w-4 h-4 transition-transform duration-200 ${
+                          isExpanded ? "rotate-180" : ""
+                        }`}
+                      />
+                    </button>
+                    <div
+                      className={`overflow-hidden transition-all duration-200 ${
+                        isExpanded ? "max-h-[500px]" : "max-h-0"
+                      }`}
+                    >
+                      <div className="py-1">
+                        {SERVICES.map((service) => (
+                          <Link
+                            key={service.id}
+                            href={`/services/${service.id}`}
+                            onClick={onClose}
+                            className="flex items-center gap-3 px-10 py-2.5 text-white/60 hover:text-[#E8AA16] hover:bg-white/5 transition-colors text-sm"
+                          >
+                            <div className="w-1 h-1 rounded-full bg-[#E8AA16]/50" />
+                            {service.title}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+                );
+              }
+              return (
+                <Link
+                  key={item.label}
+                  href={item.href}
+                  onClick={onClose}
+                  className="flex items-center justify-between px-6 py-3.5 text-white/80 hover:text-[#E8AA16] hover:bg-white/5 transition-colors group"
+                >
+                  <span className="text-sm font-medium">{item.label}</span>
+                  <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" />
+                </Link>
+              );
+            })}
           </nav>
 
           {/* Bottom CTA */}
