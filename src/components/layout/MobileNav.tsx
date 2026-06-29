@@ -23,7 +23,7 @@ export default function MobileNav({ isOpen, onClose, navItems }: MobileNavProps)
   return (
     <div
       className={cn(
-        "fixed inset-0 z-40 xl:hidden transition-all duration-300",
+        "fixed inset-0 z-50 xl:hidden transition-all duration-300",
         isOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
       )}
     >
