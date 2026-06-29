@@ -17,9 +17,13 @@
 
 html {
   scroll-behavior: smooth;
+  overflow-x: hidden;
+  width: 100%;
 }
 
 body {
+  overflow-x: hidden;
+  width: 100%;
   font-family: var(--font-body);
   background-color: var(--color-kemnay-white);
   color: var(--color-kemnay-black);
