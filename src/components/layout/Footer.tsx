@@ -16,12 +16,12 @@ import { COMPANY } from "@/lib/constants";
    Data
    ─────────────────────────────────────────────── */
 const SERVICE_LINKS = [
-  { label: "Roof Repairs", href: "/services#roof-repairs" },
-  { label: "New Roofs", href: "/services#new-roofs" },
-  { label: "Flat Roofs", href: "/services#flat-roofs" },
-  { label: "Exterior Painting", href: "/services#exterior-painting" },
-  { label: "Guttering", href: "/services#guttering" },
-  { label: "Roof Maintenance", href: "/services#roof-maintenance" },
+  { label: "Roof Repairs", href: "/services/roof-repairs" },
+  { label: "New Roofs", href: "/services/new-roofs" },
+  { label: "Flat Roofs", href: "/services/flat-roofing" },
+  { label: "Exterior Painting", href: "/services/exterior-painting" },
+  { label: "Guttering", href: "/services/guttering" },
+  { label: "Roof Maintenance", href: "/services/roof-cleaning" },
 ];
 
 const COMPANY_LINKS = [
