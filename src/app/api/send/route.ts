@@ -1,30 +1,65 @@
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
+import nodemailer from "nodemailer";
+
+function getTransport() {
+  return nodemailer.createTransport({
+    host: process.env.SMTP_HOST || "smtp.gmail.com",
+    port: Number(process.env.SMTP_PORT) || 587,
+    secure: false,
+    auth: {
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
+    },
+  });
+}
+
+function getAdminEmails(): string[] {
+  return (process.env.ADMIN_EMAIL || "kemnayroofing@gmail.com")
+    .split(",")
+    .map((e) => e.trim());
+}
+
+function getFromAddress(): string {
+  return process.env.SMTP_FROM || "kemnayroofing@gmail.com";
+}
+
+const row = (label: string, value: string) =>
+  `<tr><td style="padding:8px 12px;border-bottom:1px solid #eee;color:#555;font-weight:600;white-space:nowrap;vertical-align:top">${label}</td><td style="padding:8px 12px;border-bottom:1px solid #eee;color:#222">${value}</td></tr>`;
+
+function buildHtml(subject: string, bodyHtml: string) {
+  return `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="margin:0;padding:0;background:#f5f5f5">
+    <div style="max-width:600px;margin:0 auto;padding:20px">
+      <div style="background:#111;padding:20px;border-radius:8px 8px 0 0;text-align:center">
+        <h1 style="color:#F2B100;font-family:sans-serif;margin:0;font-size:20px">Kemnay Roofing</h1>
+      </div>
+      <div style="background:#fff;padding:24px;border-radius:0 0 8px 8px;box-shadow:0 2px 8px rgba(0,0,0,0.08)">
+        <h2 style="font-family:sans-serif;color:#333;margin:0 0 16px;font-size:18px">${subject}</h2>
+        ${bodyHtml}
+      </div>
+    </div></body></html>`;
+}
 
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
     const { type } = body;
 
-    const resendApiKey = process.env.RESEND_API_KEY;
-    if (!resendApiKey) {
+    const smtpUser = process.env.SMTP_USER;
+    const smtpPass = process.env.SMTP_PASS;
+    if (!smtpUser || !smtpPass) {
       return NextResponse.json(
-        { error: "Email not configured. Set RESEND_API_KEY." },
+        { error: "Email not configured. Set SMTP_USER and SMTP_PASS." },
         { status: 500 }
       );
     }
 
-    const resend = new Resend(resendApiKey);
-    const adminEmails = (process.env.ADMIN_EMAIL || "kemnayroofing@gmail.com")
-      .split(",")
-      .map((e) => e.trim());
+    const transport = getTransport();
+    const adminEmails = getAdminEmails();
+    const fromAddress = getFromAddress();
 
     let subject: string;
-    let html: string;
     let text: string;
-
-    const row = (label: string, value: string) =>
-      `<tr><td style="padding:8px 12px;border-bottom:1px solid #eee;color:#555;font-weight:600;white-space:nowrap;vertical-align:top">${label}</td><td style="padding:8px 12px;border-bottom:1px solid #eee;color:#222">${value}</td></tr>`;
+    let htmlBody: string;
 
     switch (type) {
       case "contact": {
@@ -38,7 +73,7 @@ export async function POST(request: NextRequest) {
           `Message:`,
           message,
         ].join("\n");
-        html = `<table style="width:100%;border-collapse:collapse;font-family:sans-serif;font-size:14px">
+        htmlBody = `<table style="width:100%;border-collapse:collapse;font-family:sans-serif;font-size:14px">
           ${row("Name", name)}
           ${row("Email", email)}
           ${row("Phone", phone || "—")}
@@ -63,7 +98,7 @@ export async function POST(request: NextRequest) {
           `Property Size: ${propertySize}`,
           `Description: ${description}`,
         ].join("\n");
-        html = `<table style="width:100%;border-collapse:collapse;font-family:sans-serif;font-size:14px">
+        htmlBody = `<table style="width:100%;border-collapse:collapse;font-family:sans-serif;font-size:14px">
           ${row("Name", `${firstName} ${lastName}`)}
           ${row("Email", email)}
           ${row("Phone", phone)}
@@ -90,7 +125,7 @@ export async function POST(request: NextRequest) {
           `Service: ${service}`,
           `Timeline: ${timeline}`,
         ].join("\n");
-        html = `<table style="width:100%;border-collapse:collapse;font-family:sans-serif;font-size:14px">
+        htmlBody = `<table style="width:100%;border-collapse:collapse;font-family:sans-serif;font-size:14px">
           ${row("Name", fullName)}
           ${row("Phone", phone)}
           ${row("Postcode", postcode)}
@@ -105,21 +140,12 @@ export async function POST(request: NextRequest) {
         return NextResponse.json({ error: "Invalid form type" }, { status: 400 });
     }
 
-    await resend.emails.send({
-      from: "Kemnay Roofing <onboarding@resend.dev>",
+    await transport.sendMail({
+      from: `"Kemnay Roofing" <${fromAddress}>`,
       to: adminEmails,
       subject,
       text,
-      html: `<!DOCTYPE html><html><head><meta charset="utf-8"></head><body style="margin:0;padding:0;background:#f5f5f5">
-        <div style="max-width:600px;margin:0 auto;padding:20px">
-          <div style="background:#111;padding:20px;border-radius:8px 8px 0 0;text-align:center">
-            <h1 style="color:#F2B100;font-family:sans-serif;margin:0;font-size:20px">Kemnay Roofing</h1>
-          </div>
-          <div style="background:#fff;padding:24px;border-radius:0 0 8px 8px;box-shadow:0 2px 8px rgba(0,0,0,0.08)">
-            <h2 style="font-family:sans-serif;color:#333;margin:0 0 16px;font-size:18px">${subject}</h2>
-            ${html}
-          </div>
-        </div></body></html>`,
+      html: buildHtml(subject, htmlBody),
     });
 
     return NextResponse.json({ success: true });
