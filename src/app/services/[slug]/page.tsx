@@ -4,6 +4,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { Check, ArrowRight, Shield, Phone, ChevronRight } from "lucide-react";
 import QuoteWizardSection from "@/components/home/QuoteWizardSection";
+import PricingSection from "@/components/service/PricingSection";
 import { SERVICES, COMPANY } from "@/lib/constants";
 import { SERVICE_DETAILS } from "@/lib/service-content";
 
@@ -183,6 +184,9 @@ export default async function ServicePage({
               ))}
             </div>
           </div>
+
+          {/* ─── Pricing Section (Gutter Cleaning only) ─── */}
+          {slug === "gutter-cleaning" && <PricingSection />}
 
           {/* ─── CTA ─── */}
           <div className="mt-24 text-center">
