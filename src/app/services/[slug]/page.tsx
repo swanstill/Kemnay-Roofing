@@ -53,7 +53,7 @@ export default async function ServicePage({
   return (
     <>
       {/* ─── Hero with single image background ─── */}
-      <section className="relative bg-kemnay-black overflow-hidden pt-[120px] sm:pt-[136px] lg:pt-[144px]">
+      <section className="relative bg-kemnay-black overflow-hidden pt-[136px] sm:pt-[136px] lg:pt-[144px]">
         {/* Background image */}
         <div className="absolute inset-0">
           <Image
