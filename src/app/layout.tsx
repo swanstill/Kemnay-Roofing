@@ -77,8 +77,8 @@ export default function RootLayout({
               "@type": "RoofingContractor",
               name: "Kemnay Roofing & Exterior Painting Ltd",
               image: "/images/og-image.jpg",
-              telephone: "+441467840181",
-              email: "info@kemnayroofingaberdeen.com",
+              telephone: "+447423177796",
+              email: "kemnayroofing@gmail.com",
               address: {
                 "@type": "PostalAddress",
                 streetAddress: "7 Greatstone Wood",

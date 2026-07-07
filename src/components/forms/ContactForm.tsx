@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { Send, Check } from "lucide-react";
+import { COMPANY } from "@/lib/constants";
 
 export default function ContactForm() {
   const [formData, setFormData] = useState({
@@ -12,6 +13,7 @@ export default function ContactForm() {
     message: "",
   });
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -19,14 +21,39 @@ export default function ContactForm() {
     setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSending(true);
+    try {
+      const res = await fetch("/api/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "contact",
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          subject: formData.subject,
+          message: formData.message,
+        }),
+      });
+      if (!res.ok) {
+        // Fall back to mailto if server-side email isn't configured yet
+        fallbackToMailto();
+      }
+    } catch {
+      fallbackToMailto();
+    }
+    setSending(false);
+    setSubmitted(true);
+  };
+
+  const fallbackToMailto = () => {
     const subject = encodeURIComponent(formData.subject || "Contact Form - Kemnay Roofing");
     const body = encodeURIComponent(
       `Name: ${formData.name}\nEmail: ${formData.email}\nPhone: ${formData.phone}\n\nMessage:\n${formData.message}`
     );
-    window.open(`mailto:info@kemnayroofingaberdeen.com?subject=${subject}&body=${body}`);
-    setSubmitted(true);
+    window.open(`mailto:${COMPANY.email}?subject=${subject}&body=${body}`);
   };
 
   if (submitted) {
@@ -107,6 +134,7 @@ export default function ContactForm() {
             <option value="New Roofs">New Roofs</option>
             <option value="Flat Roofing">Flat Roofing</option>
             <option value="Guttering">Guttering</option>
+            <option value="Gutter Cleaning">Gutter Cleaning</option>
             <option value="Exterior Painting">Exterior Painting</option>
             <option value="Chimney Work">Chimney Work</option>
             <option value="General Enquiry">General Enquiry</option>
@@ -131,8 +159,8 @@ export default function ContactForm() {
         type="submit"
         className="flex items-center gap-2 px-6 py-3.5 bg-kemnay-gold text-kemnay-black font-semibold text-sm rounded hover:bg-kemnay-gold-hover transition-all hover:scale-105"
       >
-        Send Message
-        <Send className="w-4 h-4" />
+        {sending ? "Sending..." : "Send Message"}
+        <Send className={`w-4 h-4 ${sending ? "opacity-50" : ""}`} />
       </button>
     </form>
   );

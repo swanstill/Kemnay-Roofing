@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
+import { COMPANY } from "@/lib/constants";
 import {
   Check,
   Clock,
@@ -19,6 +20,7 @@ import {
   Sun,
   ChevronRight,
   ArrowLeft,
+  Wind,
 } from "lucide-react";
 
 const TOTAL_STEPS = 6;
@@ -38,6 +40,7 @@ const serviceTypes = [
   { id: "new-roof", label: "New Roof Installation", icon: Building2 },
   { id: "exterior-painting", label: "Exterior Painting", icon: PaintBucket },
   { id: "guttering", label: "Guttering", icon: Droplets },
+  { id: "gutter-cleaning", label: "Gutter Cleaning", icon: Wind },
   { id: "chimney", label: "Chimney Work", icon: Chimney },
 ];
 
@@ -64,6 +67,8 @@ export default function MultiStepQuoteForm() {
   const [phone, setPhone] = useState("");
   const [postcode, setPostcode] = useState("");
   const [isAnimating, setIsAnimating] = useState(false);
+  const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
   const contentRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -81,6 +86,40 @@ export default function MultiStepQuoteForm() {
   const handleTextNext = () => {
     if (isAnimating) return;
     setCurrentStep((s) => Math.min(s + 1, TOTAL_STEPS));
+  };
+
+  const handleSubmit = async () => {
+    setSending(true);
+    try {
+      const res = await fetch("/api/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "multi-step-quote",
+          fullName,
+          phone,
+          postcode,
+          propertyType: selectedProperty ? propertyTypes.find(p => p.id === selectedProperty)?.label : "",
+          service: selectedService ? serviceTypes.find(s => s.id === selectedService)?.label : "",
+          timeline: selectedTimeline ? timelineOptions.find(t => t.id === selectedTimeline)?.label : "",
+        }),
+      });
+      if (!res.ok) {
+        fallbackToMailto();
+      }
+    } catch {
+      fallbackToMailto();
+    }
+    setSending(false);
+    setSubmitted(true);
+  };
+
+  const fallbackToMailto = () => {
+    const subject = encodeURIComponent("Quote Request - Kemnay Roofing (Multi-Step)");
+    const body = encodeURIComponent(
+      `Quote Request\n\nName: ${fullName}\nPhone: ${phone}\nPostcode: ${postcode}\n\nProperty Type: ${selectedProperty ? propertyTypes.find(p => p.id === selectedProperty)?.label : ""}\nService: ${selectedService ? serviceTypes.find(s => s.id === selectedService)?.label : ""}\nTimeline: ${selectedTimeline ? timelineOptions.find(t => t.id === selectedTimeline)?.label : ""}`
+    );
+    window.open(`mailto:${COMPANY.email}?subject=${subject}&body=${body}`);
   };
 
   const canProceedTextStep = () => {
@@ -339,54 +378,56 @@ export default function MultiStepQuoteForm() {
 
           {/* ============ RIGHT SIDE - 70% ============ */}
           <div className="lg:w-[70%]" ref={contentRef}>
-            {/* Progress Indicator */}
-            <div className="mb-8">
-              <div className="flex items-center justify-between mb-3">
-                <span className="text-[#F2B100] text-xs font-bold uppercase tracking-[0.1em]">
-                  Step {currentStep} of {TOTAL_STEPS}
-                </span>
-              </div>
+            {/* Progress Indicator — hide when submitted */}
+            {!submitted && (
+              <div className="mb-8">
+                <div className="flex items-center justify-between mb-3">
+                  <span className="text-[#F2B100] text-xs font-bold uppercase tracking-[0.1em]">
+                    Step {currentStep} of {TOTAL_STEPS}
+                  </span>
+                </div>
 
-              <div className="flex items-center">
-                {Array.from({ length: TOTAL_STEPS }).map((_, i) => {
-                  const num = i + 1;
-                  const isActive = num === currentStep;
-                  const isComplete = num < currentStep;
-                  return (
-                    <div key={i} className="flex items-center flex-1">
-                      <div
-                        className={`relative w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-400 ${
-                          isActive
-                            ? "bg-[#F2B100] text-black scale-110 shadow-[0_0_12px_rgba(242,177,0,0.4)]"
-                            : isComplete
-                            ? "bg-[#F2B100] text-black"
-                            : "bg-[#2A2A2A] text-white/25"
-                        }`}
-                      >
-                        {isComplete ? (
-                          <Check className="w-3.5 h-3.5" strokeWidth={3} />
-                        ) : (
-                          <span className={isActive ? "animate-pulse-once" : ""}>
-                            {num}
-                          </span>
+                <div className="flex items-center">
+                  {Array.from({ length: TOTAL_STEPS }).map((_, i) => {
+                    const num = i + 1;
+                    const isActive = num === currentStep;
+                    const isComplete = num < currentStep;
+                    return (
+                      <div key={i} className="flex items-center flex-1">
+                        <div
+                          className={`relative w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold transition-all duration-400 ${
+                            isActive
+                              ? "bg-[#F2B100] text-black scale-110 shadow-[0_0_12px_rgba(242,177,0,0.4)]"
+                              : isComplete
+                              ? "bg-[#F2B100] text-black"
+                              : "bg-[#2A2A2A] text-white/25"
+                          }`}
+                        >
+                          {isComplete ? (
+                            <Check className="w-3.5 h-3.5" strokeWidth={3} />
+                          ) : (
+                            <span className={isActive ? "animate-pulse-once" : ""}>
+                              {num}
+                            </span>
+                          )}
+                        </div>
+                        {i < TOTAL_STEPS - 1 && (
+                          <div
+                            className={`flex-1 h-[2px] mx-1 transition-all duration-500 ${
+                              isComplete
+                                ? "bg-[#F2B100]"
+                                : isActive
+                                ? "bg-gradient-to-r from-[#F2B100] to-[#333]"
+                                : "bg-[#333]"
+                            }`}
+                          />
                         )}
                       </div>
-                      {i < TOTAL_STEPS - 1 && (
-                        <div
-                          className={`flex-1 h-[2px] mx-1 transition-all duration-500 ${
-                            isComplete
-                              ? "bg-[#F2B100]"
-                              : isActive
-                              ? "bg-gradient-to-r from-[#F2B100] to-[#333]"
-                              : "bg-[#333]"
-                          }`}
-                        />
-                      )}
-                    </div>
-                  );
-                })}
+                    );
+                  })}
+                </div>
               </div>
-            </div>
+            )}
 
             {/* Question + Content Area */}
             <div
@@ -396,22 +437,34 @@ export default function MultiStepQuoteForm() {
                 transform: isAnimating ? "translateY(4px)" : "translateY(0)",
               }}
             >
-              {renderStepContent()}
+              {submitted ? (
+                <div className="text-center py-12">
+                  <div className="w-16 h-16 rounded-full bg-[#F2B100]/15 flex items-center justify-center mx-auto mb-4">
+                    <Check className="w-8 h-8 text-[#F2B100]" strokeWidth={2.5} />
+                  </div>
+                  <h3 className="text-white text-2xl font-bold font-heading mb-2">Quote Request Sent!</h3>
+                  <p className="text-white/50 text-sm">
+                    We'll get back to you within 24 hours.
+                  </p>
+                </div>
+              ) : (
+                renderStepContent()
+              )}
             </div>
 
-            {/* Next / Submit button (only for text-input steps) */}
-            {currentStep >= 4 && (
+            {/* Next / Submit button (only for text-input steps, hide when submitted) */}
+            {!submitted && currentStep >= 4 && (
               <button
-                disabled={!canProceedTextStep()}
-                onClick={currentStep === TOTAL_STEPS ? () => {} : handleTextNext}
+                disabled={!canProceedTextStep() || sending}
+                onClick={currentStep === TOTAL_STEPS ? handleSubmit : handleTextNext}
                 className={`w-full flex items-center justify-between mt-7 font-bold text-[15px] rounded-xl transition-all duration-200 ${
-                  canProceedTextStep()
+                  canProceedTextStep() && !sending
                     ? "bg-[#F2B100] text-black hover:bg-[#D99B00] active:scale-[0.98] shadow-lg shadow-[#F2B100]/20"
                     : "bg-[#333] text-white/25 cursor-not-allowed"
                 }`}
                 style={{ height: "56px", padding: "0 24px" }}
               >
-                <span>{currentStep === TOTAL_STEPS ? "Submit Quote Request" : "Continue"}</span>
+                <span>{sending ? "Sending..." : currentStep === TOTAL_STEPS ? "Submit Quote Request" : "Continue"}</span>
                 <ChevronRight className="w-5 h-5" />
               </button>
             )}

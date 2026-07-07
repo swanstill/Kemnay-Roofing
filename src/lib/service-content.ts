@@ -470,4 +470,63 @@ export const SERVICE_DETAILS: Record<string, ServiceDetail> = {
     ],
     ctaText: "Get Your Exterior Painting Quote",
   },
+
+  "gutter-cleaning": {
+    id: "gutter-cleaning",
+    title: "Gutter Cleaning",
+    shortDescription: "Professional gutter cleaning to remove blockages and protect your property from water damage.",
+    description: "Keep your gutters clear and free-flowing with our professional gutter cleaning service. We remove leaves, moss, debris, and blockages to protect your property from water damage, damp, and foundation issues.",
+    icon: "Wind",
+    image: "/images/services/gutter-cleaning.jpg",
+    heroSubtitle: "Professional gutter cleaning and maintenance to prevent blockages, water damage, and protect your property's drainage system year-round.",
+    features: [
+      {
+        title: "Thorough Gutter Clearance",
+        description: "We completely clear your gutters of leaves, moss, dirt, and all debris that causes blockages. Our team uses professional equipment to reach every section, ensuring water flows freely through your entire drainage system.",
+        benefits: [
+          "Complete removal of all blockages",
+          "Professional equipment for full coverage",
+          "Ensures free-flowing drainage system",
+        ],
+      },
+      {
+        title: "Downpipe Cleaning & Unblocking",
+        description: "Blocked downpipes can cause serious water damage. We flush and clear all downpipes to restore full drainage capacity, preventing overflow and water pooling around your property's foundations.",
+        benefits: [
+          "Restores full drainage capacity",
+          "Prevents water overflow and pooling",
+          "Protects foundations from water damage",
+        ],
+      },
+      {
+        title: "Gutter Inspection & Report",
+        description: "During every clean, we thoroughly inspect your gutters, joints, brackets, and fascia for signs of damage, sagging, or deterioration. You'll receive a clear report so you know the condition of your drainage system.",
+        benefits: [
+          "Detailed inspection of all components",
+          "Early detection of potential problems",
+          "Clear report on gutter condition",
+        ],
+      },
+      {
+        title: "Preventative Maintenance Plans",
+        description: "Regular gutter cleaning prevents costly repairs down the line. We offer scheduled maintenance plans tailored to your property, keeping gutters in top condition through every season and extending their lifespan.",
+        benefits: [
+          "Prevents costly emergency repairs",
+          "Scheduled cleaning tailored to your needs",
+          "Extends gutter lifespan significantly",
+        ],
+      },
+    ],
+    servicesOffered: [
+      "Full gutter clearance and cleaning",
+      "Downpipe unblocking and flushing",
+      "Gutter and bracket inspection",
+      "Moss and debris removal",
+      "Fascia and soffit checks",
+      "Emergency gutter cleaning",
+      "Seasonal maintenance plans",
+      "Free gutter inspection and quote",
+    ],
+    ctaText: "Book Your Gutter Cleaning",
+  },
 };

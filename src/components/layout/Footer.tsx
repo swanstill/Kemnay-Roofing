@@ -21,6 +21,7 @@ const SERVICE_LINKS = [
   { label: "Flat Roofs", href: "/services/flat-roofing" },
   { label: "Exterior Painting", href: "/services/exterior-painting" },
   { label: "Guttering", href: "/services/guttering" },
+  { label: "Gutter Cleaning", href: "/services/gutter-cleaning" },
   { label: "Roof Maintenance", href: "/services/roof-cleaning" },
 ];
 

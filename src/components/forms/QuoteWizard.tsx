@@ -16,6 +16,7 @@ import {
   PROPERTY_TYPES,
   URGENCY_OPTIONS,
   PROPERTY_SIZES,
+  COMPANY,
 } from "@/lib/constants";
 import type { QuoteFormData } from "@/lib/types";
 
@@ -61,6 +62,7 @@ export default function QuoteWizard() {
   const [currentStep, setCurrentStep] = useState(1);
   const [formData, setFormData] = useState<QuoteFormData>(initialFormData);
   const [submitted, setSubmitted] = useState(false);
+  const [sending, setSending] = useState(false);
 
   const updateField = (field: keyof QuoteFormData, value: string | string[]) => {
     setFormData((prev) => ({ ...prev, [field]: value }));
@@ -97,13 +99,34 @@ export default function QuoteWizard() {
     }
   };
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
+    setSending(true);
+    try {
+      const res = await fetch("/api/send", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          type: "quote",
+          ...formData,
+        }),
+      });
+      if (!res.ok) {
+        // Fall back to mailto if server-side email isn't configured yet
+        fallbackToMailto();
+      }
+    } catch {
+      fallbackToMailto();
+    }
+    setSending(false);
+    setSubmitted(true);
+  };
+
+  const fallbackToMailto = () => {
     const subject = encodeURIComponent("Quote Request - Kemnay Roofing");
     const body = encodeURIComponent(
       `Quote Request\n\nName: ${formData.firstName} ${formData.lastName}\nEmail: ${formData.email}\nPhone: ${formData.phone}\nPostcode: ${formData.postcode}\n\nProperty Type: ${formData.propertyType}\nServices: ${formData.services.join(", ")}\nUrgency: ${formData.urgency}\nProperty Size: ${formData.propertySize}\nDescription: ${formData.description}`
     );
-    window.open(`mailto:info@kemnayroofingaberdeen.com?subject=${subject}&body=${body}`);
-    setSubmitted(true);
+    window.open(`mailto:${COMPANY.email}?subject=${subject}&body=${body}`);
   };
 
   if (submitted) {
@@ -452,9 +475,14 @@ export default function QuoteWizard() {
             ) : (
               <button
                 onClick={handleSubmit}
-                className="flex items-center gap-2 px-6 py-3 text-sm font-semibold bg-kemnay-gold text-kemnay-black rounded-lg hover:bg-kemnay-gold-hover transition-all"
+                disabled={sending}
+                className={`flex items-center gap-2 px-6 py-3 text-sm font-semibold rounded-lg transition-all ${
+                  sending
+                    ? "bg-gray-100 text-gray-400 cursor-not-allowed"
+                    : "bg-kemnay-gold text-kemnay-black hover:bg-kemnay-gold-hover"
+                }`}
               >
-                Submit Quote Request
+                {sending ? "Sending..." : "Submit Quote Request"}
                 <Check className="w-4 h-4" />
               </button>
             )}

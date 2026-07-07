@@ -4,9 +4,9 @@ export const COMPANY = {
   name: "Kemnay Roofing & Exterior Painting Ltd",
   shortName: "Kemnay Roofing",
   tagline: "We protect what matters most.",
-  phone: "01467 840181",
-  phoneFormatted: "01467 840 181",
-  email: "info@kemnayroofingaberdeen.com",
+  phone: "07423 177796",
+  phoneFormatted: "07423 177 796",
+  email: "kemnayroofing@gmail.com",
   address: "7 Greatstone Wood, Kemnay, AB51 5LU",
   rating: 5.0,
   reviewCount: 63,
@@ -100,6 +100,16 @@ export const SERVICES: Service[] = [
       "Professional exterior painting with premium weather-resistant paints for a stunning, long-lasting finish.",
     icon: "Paintbrush",
     image: "/images/services/exterior-painting.webp",
+  },
+  {
+    id: "gutter-cleaning",
+    title: "Gutter Cleaning",
+    description:
+      "Keep your gutters clear and free-flowing with our professional gutter cleaning service. We remove leaves, moss, debris, and blockages to protect your property from water damage, damp, and foundation issues.",
+    shortDescription:
+      "Professional gutter cleaning to remove blockages and protect your property from water damage.",
+    icon: "Wind",
+    image: "/images/services/gutter-cleaning.jpg",
   },
 ];
 
