@@ -2,10 +2,10 @@
 
 import Link from "next/link";
 import {
-  Home,
   Search,
+  Droplets,
   Wrench,
-  Building2,
+  ShieldCheck,
   ClipboardList,
   Info,
   MapPin,
@@ -14,53 +14,55 @@ import {
   Award,
   Users,
   Clock,
+  Home,
+  Building2,
 } from "lucide-react";
 import ScrollReveal from "@/components/ui/ScrollReveal";
 
 /* ───────────────────────────────────────────────
-   Pricing Data
+   Pricing Data — Gutter Cleaning
    ─────────────────────────────────────────────── */
 const pricingRows = [
   {
     icon: Search,
-    service: "Roof Inspection",
-    price: "£80 – £150",
-    details: "Includes full roof condition report.",
+    service: "Gutter Inspection",
+    price: "£40 – £80",
+    details: "Full gutter assessment with condition report.",
+  },
+  {
+    icon: Droplets,
+    service: "Standard Gutter Cleaning",
+    price: "£60 – £120",
+    details: "Clearing leaves, moss, and debris from gutters.",
   },
   {
     icon: Wrench,
-    service: "Minor Roof Repairs",
-    price: "£120 – £450",
-    details: "Broken tiles, flashing repairs, small leaks.",
+    service: "Gutter & Downpipe Unblocking",
+    price: "£80 – £150",
+    details: "Flushing and clearing blocked downpipes.",
+  },
+  {
+    icon: ShieldCheck,
+    service: "Full Gutter Service",
+    price: "£120 – £220",
+    details: "Clean, inspection, minor repairs, and report.",
   },
   {
     icon: Building2,
-    service: "Chimney Repairs",
-    price: "£250 – £900",
-    details: "Repointing, lead work, chimney maintenance.",
-  },
-  {
-    icon: ClipboardList,
-    service: "Flat Roof Repairs",
-    price: "£300 – £1,200",
-    details: "Felt, EPDM and GRP repairs available.",
-  },
-  {
-    icon: Home,
-    service: "New Roof Installation",
-    price: "£3,500 – £12,000+",
-    details: "Price depends on roof size and materials.",
+    service: "Commercial Gutter Cleaning",
+    price: "£200 – £500+",
+    details: "Multi-storey and large commercial properties.",
   },
 ];
 
 const pricingFactors = [
-  "Roof size",
+  "Number of gutters",
   "Property height",
-  "Roof pitch",
-  "Material type",
-  "Scaffolding requirements",
+  "Level of blockage",
+  "Downpipe condition",
   "Accessibility",
-  "Weather damage",
+  "Scaffolding requirements",
+  "Frequency of cleaning",
   "Emergency call-out",
 ];
 
@@ -88,13 +90,13 @@ export default function PricingSection() {
               className="inline-block text-[13px] font-semibold uppercase tracking-[0.15em] rounded-full px-5 py-2 mb-5"
               style={{ backgroundColor: "#FFC400", color: "#071B33" }}
             >
-              Roofing Price Guide
+              Gutter Cleaning Price Guide
             </span>
             <h2
               className="font-heading font-bold leading-[1.1] tracking-wide"
               style={{ color: "#071B33", fontSize: "clamp(28px, 4.5vw, 54px)" }}
             >
-              Typical Roofing Service Prices
+              Gutter Cleaning Pricing Guide
             </h2>
             <p
               className="mx-auto mt-5 leading-relaxed"
@@ -128,7 +130,7 @@ export default function PricingSection() {
               <div className="flex items-center gap-3 px-8">
                 <Home className="w-5 h-5" style={{ color: "#FFC400" }} />
                 <span className="text-white font-bold text-[15px]" style={{ fontFamily: "Poppins, sans-serif" }}>
-                  Roofing Service
+                  Gutter Service
                 </span>
               </div>
               <div className="text-center">
@@ -315,7 +317,7 @@ export default function PricingSection() {
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: "#FFC400" }} />
                   <span className="text-[15px] leading-relaxed" style={{ color: "#555", fontFamily: "Inter, sans-serif" }}>
-                    Every property is unique.
+                    Every property&apos;s guttering is unique.
                   </span>
                 </li>
                 <li className="flex items-start gap-3">
@@ -327,7 +329,7 @@ export default function PricingSection() {
                 <li className="flex items-start gap-3">
                   <CheckCircle className="w-4 h-4 shrink-0 mt-0.5" style={{ color: "#FFC400" }} />
                   <span className="text-[15px] leading-relaxed" style={{ color: "#555", fontFamily: "Inter, sans-serif" }}>
-                    Final pricing depends on inspection.
+                    Final pricing depends on inspection and blockage level.
                   </span>
                 </li>
               </ul>
@@ -388,7 +390,7 @@ export default function PricingSection() {
                 e.currentTarget.style.color = "#071B33";
               }}
             >
-              Get Your Free Quote
+              Get Your Free Gutter Quote
             </Link>
             <p
               className="mt-4 text-[14px]"

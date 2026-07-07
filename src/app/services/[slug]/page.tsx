@@ -191,10 +191,12 @@ export default async function ServicePage({
           {/* ─── CTA ─── */}
           <div className="mt-24 text-center">
             <h3 className="font-heading text-3xl sm:text-4xl font-bold text-[#0D0D0D] tracking-wide">
-              READY TO GET STARTED?
+              {slug === "gutter-cleaning" ? "NEED YOUR GUTTERS CLEANED?" : "READY TO GET STARTED?"}
             </h3>
             <p className="mt-4 text-[#4B4B4B] max-w-xl mx-auto">
-              Contact us today for a free, no-obligation quote. We&apos;re here to help with all your roofing needs.
+              {slug === "gutter-cleaning"
+                ? "Contact us today for a free, no-obligation gutter inspection and quote. We'll keep your drainage system flowing perfectly."
+                : "Contact us today for a free, no-obligation quote. We're here to help with all your roofing needs."}
             </p>
             <div className="flex flex-wrap items-center justify-center gap-4 mt-8">
               <Link
