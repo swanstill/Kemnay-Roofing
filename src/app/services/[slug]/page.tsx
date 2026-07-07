@@ -53,7 +53,7 @@ export default async function ServicePage({
   return (
     <>
       {/* ─── Hero with single image background ─── */}
-      <section className="relative bg-kemnay-black overflow-hidden pt-24 sm:pt-32" style={{ minHeight: "55vh" }}>
+      <section className="relative bg-kemnay-black overflow-hidden">
         {/* Background image */}
         <div className="absolute inset-0">
           <Image
@@ -82,7 +82,7 @@ export default async function ServicePage({
         {/* Gold accent line at top */}
         <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-transparent via-kemnay-gold to-transparent z-10" />
 
-        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center" style={{ minHeight: "calc(55vh - 8rem)", paddingBottom: "4rem" }}>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col justify-center pt-28 pb-16 sm:pt-32 sm:pb-20 lg:pt-36 lg:pb-24">
           {/* Breadcrumbs */}
           <nav className="flex items-center gap-2 mb-6">
             <Link href="/" className="text-white/50 hover:text-kemnay-gold text-sm transition-colors">
